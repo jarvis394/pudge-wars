@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,48 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bulma.css">
 
   <!-- Libs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   <script src="js/p5.js"></script>
-</head>
-<body>
-  
+
   <!-- Scripts -->
-  <script src="js/Main.js"></script>
+  <script>
+    let initTimeStart = new Date().getTime();
+  </script>
+  <script src="js/styles.js"></script>
   <script src="js/Player.js"></script>
+  <script src="js/Main.js"></script>
   <script src="js/Socket.js"></script>
-  
+  <script>
+    console.log(
+      "> %c[LOG] %cInitialized in " + (new Date().getTime() - initTimeStart) + "ms",
+      styles.log,
+      styles.default
+    );
+  </script>
+</head>
+
+<body>
+
+  <div class="players" id="playersCount" style="display: none">
+    <h3>
+      Players
+    </h3>
+  </div>
+
+  <div class="game-menu" id="menu">
+    <h1 class="game-header">PUDGE WARS</h1>
+
+    <div class="control" id="nickInput">
+        <input type="text" placeholder="Nickname" id="nick" required class="name-input input" />
+    </div>
+    
+    <button onclick="connectToServer()" class="is-danger connect-btn button">CONNECT</button>
+    <button class="button">SETTINGS</button>
+  </div>
+
 </body>
+
 </html>

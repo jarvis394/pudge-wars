@@ -1,6 +1,9 @@
 const P_WIDTH = 487
 const P_HEIGHT = 357
 
+// Started state
+let started = false
+
 // Players on server
 let players = {}
 
@@ -17,6 +20,8 @@ function setup() {
 function draw() {
   clear()
   background(255)
+
+  if (!started) return
 
   if (keyIsDown(87)) players[socket.id].move(0, -10)
   if (keyIsDown(83)) players[socket.id].move(0, 10)

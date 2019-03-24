@@ -27,22 +27,19 @@ setInterval(() => heartbeat(), 0)
 
 io.sockets.on('connection', socket => {
 
-  console.log("> [LOG] New client:".green, `${socket.id}`.gray)
-
-  players[socket.id] = {
-    id: socket.id,
-    x: 0,
-    y: 0,
-    nick: "PUDGE",
-    hooking: false
-  }
+  console.log(">", "[LOG]".green, "New client:", `${socket.id}`.gray)
 
   // Send to socket info about players to create 'Player' objects
-  socket.emit('start', {
-    players: players
-  })
+  socket.on("start", player => {
+    players[socket.id] = player
+    console.log(">", "[LOG]".green, "New player:", `${player.nick}`.gray)
 
-  io.sockets.emit("addPlayer", players[socket.id])
+    socket.emit('start', {
+      players: players
+    })
+
+    io.sockets.emit("addPlayer", players[socket.id])
+  })
 
   socket.on("update", data => {
     if (!players[socket.id]) return
@@ -60,7 +57,7 @@ io.sockets.on('connection', socket => {
     // Say that to sockets
     io.sockets.emit("removePlayer", socket.id)
 
-    console.log("> [LOG] Client".red, `${socket.id}`.gray, "disconnected by:".red, reason)
+    console.log(">", "[LOG]".red, "Client".gray, `${socket.id}`, "disconnected by:".gray, reason)
   })
 
 })
@@ -76,5 +73,5 @@ app.get('/', (req, res) => {
 
 // Listen on port
 http.listen(config.PORT, () => {
-  console.log('> [SERVER] Listening on port'.yellow, "4000".white);
+  console.log('>', '[SERVER]'.yellow, 'Listening on port', "4000".gray);
 });
